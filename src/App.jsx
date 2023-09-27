@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './App.css'
-import { getRamdonFact } from './services/facts'
-
+import { getImage, getRamdonFact } from './services/facts'
 
 const CAT_IMAGE_URL = 'https://cataas.com'
 
@@ -12,19 +11,12 @@ export function App() {
 
     useEffect(() => {
         getRamdonFact().then((res) => setFact(res))
-        // getRamdonFact().then(setFact)
     }, [])
 
 
     useEffect(() => {
         if (!fact) return
-        const threeFirstWords = fact.split(' ').splice(0, 3).join(' ')
-        fetch(`https://cataas.com/cat/says/${threeFirstWords}?size=50&color=black&json=true`)
-            .then(res => res.json())
-            .then(data => {
-                const { url } = data
-                setImageUrl(url)
-            })
+        getImage(fact).then((res) => setImageUrl(res))
     }, [fact])
 
 
