@@ -1,23 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import './App.css'
-import { getRamdonFact } from './services/facts'
+// import { getRamdonFact } from './services/facts'
 import { useCatImage } from './hooks/useCatImage'
+import { useCatFact } from './hooks/useCatFact'
 
 const CAT_IMAGE_URL = 'https://cataas.com'
 
+
 export function App() {
-    const [fact, setFact] = useState()
+    const { fact, refreshFact } = useCatFact() // Custom hooks, devuelve el hecho y la funcion de refreshFact
     const { imageUrl } = useCatImage({ fact }) //Custom hooks
 
-    useEffect(() => {
-        getRamdonFact().then((res) => setFact(res))
-    }, [])
-
-
-
-    const handlerClick = async () => {
-        const newFact = await getRamdonFact()
-        setFact(newFact)
+    const handlerClick = () => {
+        refreshFact()
     }
 
     return (
